@@ -1,0 +1,23 @@
+﻿library(e1071)
+bank_data = read.csv("bank.csv",head=TRUE,sep=";")
+bank_loan_process<-bank_data
+bank_data_sorted<-ifelse(bank_loan_process$loan=="yes",1,0)
+bank_loan_process$loan<-bank_data_sorted
+bank_data_sorted<-ifelse(bank_loan_process$housing=="yes",1,0)
+bank_loan_process$housing<-bank_data_sorted
+bank_data_sorted<-ifelse(bank_loan_process$marital=="married",1,ifelse(bank_loan_process$marital=="single",2,3))
+bank_loan_process$marital<-bank_data_sorted
+education_unique<-unique(bank_loan_process$education)
+bank_loan_process$education=as.numeric(match(bank_loan_process$education,education_unique))
+job_unique<-unique(bank_loan_process$job)
+bank_loan_process$job=as.numeric(match(bank_loan_process$job,job_unique))
+contact_unique<-unique(bank_loan_process$contact)
+bank_loan_process$contact=as.numeric(match(bank_loan_process$contact,contact_unique))
+default_unique<-unique(bank_loan_process$default)
+bank_loan_process$default=as.numeric(match(bank_loan_process$default,default_unique))
+poutcome_unique<-unique(bank_loan_process$poutcome)
+bank_loan_process$poutcome=as.numeric(match(bank_loan_process$poutcome,poutcome_unique))
+y_unique<-unique(sort(bank_loan_process$y))
+bank_loan_process$y=as.numeric(match(bank_loan_process$y,y_unique))
+month_unique<-unique(sort(bank_loan_process$month))
+bank_loan_process$month=as.numeric(match(bank_loan_process$month,month_unique))
